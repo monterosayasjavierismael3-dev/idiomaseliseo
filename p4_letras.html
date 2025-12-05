@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Adivina el idioma por la palabra</title>
+
+<style>
+    /* estrilo de la parte de atras de la pagina*/
+    body{
+        font-family: Arial;      /* Tipo de letra */
+        text-align:center;       /* Centrar el texto */
+        background:#eeeeee;      /* Color gris claro del fondo */
+        padding:30px;            /* Espacio interno */
+    }
+
+    /*diseño de las opciones*/
+    #opciones{
+        margin-top:20px;          /* Separación arriba */
+        display:flex;             /* Colocar botones en fila */
+        justify-content:center;   /* Centrar horizontalmente */
+        flex-wrap:wrap;           /* Permitir que bajen de línea */
+        gap:20px;                 /* Separación entre botones */
+    }
+
+    /* estilo general de todos los botones */
+    button{
+        padding:15px 25px;                            /* Tamaño del botón */
+        font-size:18px;                                /* Tamaño del texto */
+        border-radius:12px;                            /* Bordes redondeados */
+        cursor:pointer;                                /* Cursor de mano */
+        border:none;                                   /* Sin borde */
+        background:white;                              /* Fondo blanco */
+        box-shadow:0 0 10px rgba(0,0,0,0.1);           /* Sombra suave */
+    }
+
+    /* diseño del boton cuando la respuesta es correcta*/
+    .correcto{
+        background:#4CAF50;   /* Verde */
+        color:white;          /* Texto blanco */
+    }
+
+    /* diseño del boton cuando la respuesta sea incorrecta */
+    .incorrecto{
+        background:#E53935;   /* Rojo */
+        color:white;          /* Texto blanco */
+    }
+
+    /*diseño para el boton volver con transision*/
+            .volver-btn {
+    background: #ffffff;
+    color: #333;
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: 2px solid #4A90E2;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+/*diseño para la transision del boton cuando pase el puntero sobre el*/
+.volver-btn:hover {
+    background: #4A90E2;
+    color: white;
+    transform: scale(1.05);
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Adivina el idioma por la palabra</h1>
+
+<!-- Aquí se muestra la palabra que el usuario debe adivinar -->
+<h2 id="palabra">---</h2>
+
+<!-- Aquí aparecerán los botones de opciones -->
+<div id="opciones"></div>
+
+<!-- Aquí aparecerá si la respuesta es correcta o incorrecta -->
+<p id="respuesta"></p>
+
+<script>
+/* LISTA DE PALABRAS
+Cada objeto tiene:
+- palabra -> texto que aparece
+- correcta -> idioma real
+*/
+const quiz = [
+    { palabra:"Bonjour", correcta:"frances" },
+    { palabra:"Hallo", correcta:"aleman" },
+    { palabra:"Ciao", correcta:"italiano" },
+    { palabra:"Hola", correcta:"espanol" },
+    { palabra:"Adiós", correcta:"espanol" },
+    { palabra:"Merci", correcta:"frances" },
+    { palabra:"Danke", correcta:"aleman" },
+    { palabra:"Grazie", correcta:"italiano" }
+];
+
+/* Opciones que se mostrarán como botones */
+const opciones = ["espanol","frances","aleman","italiano"];
+
+/* Índice de la palabra actual */
+let i = 0;
+
+/*funcion para mostrar las palabras y botones*/
+function mostraropciones(){
+    /* Muestra la palabra actual del quiz */
+    document.getElementById("palabra").textContent = quiz[i].palabra;
+
+    /* Contenedor donde van las opciones */
+    const div = document.getElementById("opciones");
+    div.innerHTML = ""; // Limpia botones anteriores
+
+    /* Crear un botón por cada idioma posible */
+    opciones.forEach(op => {
+        div.innerHTML += `<button onclick="verificar('${op}')">${op}</button>`;
+    });
+}
+
+/* 
+======== FUNCIÓN QUE VERIFICA LA RESPUESTA ========
+*/
+function verificar(id){
+    const r = document.getElementById("respuesta");
+
+    /* Compara si el usuario acertó */
+    if(id === quiz[i].correcta){
+        r.textContent = "¡Correcto!";
+        r.className = "correcto";
+    } else {
+        r.textContent = "Incorrecto";
+        r.className = "incorrecto";
+    }
+
+    /* Después de 1.2 segundos, pasa a la siguiente palabra */
+    setTimeout(()=>{
+        i++;  // avanzar a la siguiente palabra
+          /*funcion de si todas las opciones ya fueron respondidas se queda en blanco la palabra y la opcion y aparece un texto que diga "terminaste"*/
+        if(i >= quiz.length){
+            r.textContent = "Terminaste 😊";
+            document.getElementById("palabra").textContent = "";
+            document.getElementById("opciones").innerHTML = "";
+        } else {
+            r.textContent = "";
+            mostraropciones();
+        }
+    },1200);
+}
+
+/* Iniciar el quiz */
+mostraropciones();
+</script>
+
+<!-- Botón para regresar al index -->
+<button class="volver-btn" onclick="location.href='index.html'">⟵ Volver al inicio</button>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Quiz</title>
+<style>
+    /*diseño para el fondo de la pagina*/
+body{ 
+    font-family:Arial;
+     background:#fafafa;
+      padding:30px;
+       text-align:center;
+     }
+     /*diseño para los botones e general*/
+button{ padding:10px 20px;
+ margin:10px;
+  border-radius:10px;
+   border:none;
+    cursor:pointer;
+     background:white;
+      box-shadow:0 0 8px rgba(0,0,0,0.1);
+      }    
+
+       /*diseño para el boton volver con transision*/
+            .volver-btn {
+    background: #ffffff;
+    color: #333;
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: 2px solid #4A90E2;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+/*diseño para la transision del boton cuando pase el puntero sobre el*/
+.volver-btn:hover {
+    background: #4A90E2;
+    color: white;
+    transform: scale(1.05);
+}
+/*eliseo alli abajo se crean esas 3 variables div para usarlas en el scripts */
+</style>
+
+
+</head>
+
+<body>
+<h1>Quiz de Idiomas</h1>
+<p id="pregunta"></p>
+<div id="opciones"></div>
+<p id="resultado"></p>
+
+<script>
+/* Preguntas del quiz */
+/*hay 3 opciones el numero 0 es la primera el 1 la segunda y el 2 la tercera*/
+const quiz = [
+  { palabra: "Hola en italiano", opciones: ["Ciao","Hallo","Salut"], correcta: 0 },
+  { palabra: "Adiós en alemán", opciones: ["Adieu","Tschüss","Addio"], correcta: 1 },
+  { palabra: "Gracias en francés", opciones: ["Gracias","Danke","Merci"], correcta: 2 },
+  { palabra: "Por favor en español", opciones: ["Por favor","S'il vous plaît","Per favore"], correcta: 0 },
+  { palabra: "Sí en alemán", opciones: ["Oui","Ja","Si"], correcta: 1 },
+  { palabra: "No en italiano", opciones: ["Nein","Non","No"], correcta: 2 },
+  { palabra: "Buenos días en español", opciones: ["Buongiorno","Guten Morgen","Buenos días"], correcta: 2 },
+  { palabra: "Buenas noches en francés", opciones: ["Buonanotte","Bonne nuit","Guten Abend"], correcta: 1 },
+  { palabra: "Gracias en español", opciones: ["Danke","Gracias","Merci"], correcta: 1 },
+  { palabra: "Perdón / Disculpa en italiano", opciones: ["Pardonnez-moi","Scusa","Entschuldigung"], correcta: 1 },
+  { palabra: "¿Cómo estás? en francés", opciones: ["Come stai?","Comment ça va?","Wie geht's?" ], correcta: 1 },
+  { palabra: "Encantado (mucho gusto) en alemán", opciones: ["Enchanté","Sehr erfreut","Piacere"], correcta: 1 },
+  { palabra: "¿Qué tal? en italiano", opciones: ["¿Qué tal?","Come va?","Comment ça va?" ], correcta: 1 },
+  { palabra: "Hasta luego en español", opciones: ["Au revoir","Hasta luego","Ciao"], correcta: 1 },
+  { palabra: "Lo siento en alemán", opciones: ["Lo siento","Je suis désolé","Es tut mir leid"], correcta: 2 },
+  { palabra: "Bienvenido en italiano", opciones: ["Benvenuto","Bienvenue","Willkommen"], correcta: 0 },
+  { palabra: "Salud (brindis) en francés", opciones: ["Salud","Santé","Prost"], correcta: 1 },
+  { palabra: "Buen provecho en español", opciones: ["Guten Appetit","Buon appetito","Buen provecho"], correcta: 2 },
+  { palabra: "Hasta mañana en italiano", opciones: ["Hasta mañana","A demain","A domani"], correcta: 2 },
+  { palabra: "Nos vemos (informal) en alemán", opciones: ["Ci vediamo","Bis bald","À bientôt"], correcta: 1 },
+  { palabra: "¿Dónde está el baño? en francés", opciones: ["Dov'è il bagno?","Wo ist die Toilette?","Où sont les toilettes?" ], correcta: 2 },
+  { palabra: "Saludo informal 'hey' en español", opciones: ["Hey","Ciao","Salut"], correcta: 0 },
+  { palabra: "Por nada / De nada en alemán", opciones: ["De rien","Prego","Gern geschehen"], correcta: 2 },
+  { palabra: "¿Cuánto cuesta? en italiano", opciones: ["Combien ça coûte?","Wie viel kostet das?","Quanto costa?" ], correcta: 2 },
+  { palabra: "Feliz cumpleaños en francés", opciones: ["Feliz cumpleaños","Buon compleanno","Joyeux anniversaire"], correcta: 2 },
+  { palabra: "Bien (respuesta) en alemán", opciones: ["Bien","Gut","Bene"], correcta: 1 },
+  { palabra: "Amigo en italiano", opciones: ["Ami","Amico","Freund"], correcta: 1 },
+  { palabra: "Perdón / permiso en francés (al pasar)", opciones: ["Scusa","Excusez-moi","Entschuldigen Sie"], correcta: 1 },
+  { palabra: "Te quiero en español", opciones: ["Ti amo","Je t'aime","Te quiero"], correcta: 2 }
+];
+/*se abre un let i=0 que sirve para empezar desde la primer pregunta*/
+let i = 0;
+mostrarPregunta();
+
+/* Muestra la pregunta */
+function mostrarPregunta(){
+    document.getElementById('pregunta').textContent = quiz[i].palabra;
+    const div = document.getElementById('opciones');
+    div.innerHTML = '';
+    quiz[i].opciones.forEach((op,idx)=>{
+        div.innerHTML += `<button onclick='verificar(${idx})'>${op}</button>`;
+    });
+}
+
+/* Verifica respuesta */
+function verificar(opcion){
+    if(opcion === quiz[i].correcta){ document.getElementById('resultado').textContent = "Correcto ✓"; }
+    else{ document.getElementById('resultado').textContent = "Incorrecto ✗"; }
+    i = (i+1) % quiz.length;
+    setTimeout(()=>{ document.getElementById('resultado').textContent = ''; mostrarPregunta(); },1000);
+}
+/*boton para regresar a la pagina inicial*/
+</script>
+
+<button class="volver-btn" onclick="location.href='index.html'">⟵ Volver al inicio</button>
+
+</body>
+</html>

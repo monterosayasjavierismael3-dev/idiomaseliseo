@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Adivina si es un país hispanohablante</title>
+
+    <style>
+        /* Estilo principal de la parte de atras de la pagina*/
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+            padding: 20px;
+        }
+        /*diseño de las opciones si y no*/
+        #card {
+            background: white;
+            padding: 25px;
+            width: 350px;
+            margin: auto;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        /*diseño  de los botones*/
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+         /*diseño  para el mensaje "correcto" si la respuesta es correcta*/
+        .correcto {
+            background-color: #4CAF50;      
+            color: white;
+        }
+          /*diseño  para el mensaje "incorrecto" si la respuesta es incorrecta*/
+        .incorrecto {
+            background-color: #E53935;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>¿Este país es hispanohablante?</h1>
+
+    <!-- creacion de variable card (opcion si y no) para introducir otra variable llamada pais -->
+    <div id="card">
+        <h2 id="pais">---</h2>
+
+        <!-- creacion de botones de respuesta true para si y false para no -->
+        <button onclick="responder(true)">Sí</button>
+        <button onclick="responder(false)">No</button>
+
+        <!-- Texto para mostrar si acertó -->
+        <p id="resultado"></p>
+    </div>
+
+<script>
+
+    /* 
+    Cada país es un objeto con:
+    - nombre: el nombre del país que se mostrará
+    - hispano: true si habla español, false si NO habla español
+    */
+
+    const paises = [
+        { nombre: "México", hispano: true },
+        { nombre: "España", hispano: true },
+        { nombre: "Argentina", hispano: true },
+        { nombre: "Colombia", hispano: true },
+        { nombre: "Venezuela", hispano: true },
+        { nombre: "Chile", hispano: true },
+        { nombre: "Guatemala", hispano: true },
+        { nombre: "Perú", hispano: true },
+        
+        { nombre: "Canadá", hispano: false },
+        { nombre: "Estados Unidos", hispano: false },
+        { nombre: "Brasil", hispano: false },
+        { nombre: "Francia", hispano: false },
+        { nombre: "China", hispano: false },
+        { nombre: "Japón", hispano: false },
+        { nombre: "Alemania", hispano: false },
+        { nombre: "Italia", hispano: false },
+    ];
+
+
+
+    let paisActual = null;  // Guarda el país actual que se está mostrando
+
+
+
+    /*funcion para escoger unn pais al azar*/
+    function inicio() {
+        // Selecciona un país random del arreglo
+        paisActual = paises[Math.floor(Math.random() * paises.length)];
+
+        // Inserta el nombre en la tarjeta
+        document.getElementById("pais").textContent = paisActual.nombre;
+
+        // Limpia resultado anterior
+        document.getElementById("resultado").textContent = "";
+    }
+
+    
+
+    /*
+    El parámetro "respuesta" será:
+    - true  → si el usuario presiona "Sí"
+    - false → si presiona "No"
+    */
+    function responder(respuesta) {
+
+        const resultado = document.getElementById("resultado");
+
+        // Compara si el usuario acertó
+        if (respuesta === paisActual.hispano) {
+            resultado.textContent = "¡Correcto!";
+            resultado.className = "correcto";
+        } else {
+            resultado.textContent = "Incorrecto";
+            resultado.className = "incorrecto";
+        }
+
+        // Después de 1 segundo, pasa a otro país
+        setTimeout(inicio, 1200);
+    }
+
+    
+    // Inicia el juego mostrando el primer país
+    inicio();
+
+</script>
+<button class="volver-btn" onclick="location.href='index.html'">⟵ Volver al inicio</button>
+
+</body>
+</html>

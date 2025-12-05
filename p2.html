@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Dónde se habla cada idioma</title>
+<style>
+    body { 
+        font-family: Arial;
+        background:#f0f0f0;
+        padding:20px;
+        text-align:center;
+         }
+
+    .idioma-btn {
+        padding:15px 25px;
+        border:none;
+        border-radius:12px;
+        margin:10px;
+        background:white;
+        cursor:pointer;
+        font-size:18px;
+        box-shadow:0 0 10px rgba(0,0,0,0.1);
+            }  
+
+    .paises { 
+        margin-top:20px;
+        display:flex;
+        justify-content:center;
+        flex-wrap:wrap;
+        gap:20px;
+         }
+
+    .pais { 
+        background:white;
+        padding:10px;
+        width:150px;
+        border-radius:12px;
+        box-shadow:0 0 10px rgba(0,0,0,0.1);
+            }   
+            /*diseño para el boton volver con transision*/
+            .volver-btn {
+    background: #ffffff;
+    color: #333;
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: 2px solid #4A90E2;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+/*diseño para la transision del boton cuando pase el puntero sobre el*/
+.volver-btn:hover {
+    background: #4A90E2;
+    color: white;
+    transform: scale(1.05);
+}
+
+
+
+</style>
+</head>
+<body>
+<h1>Dónde se habla cada idioma</h1>
+<!-- creacion de los 4 botones y un div resultado para mostrar los paises  -->
+
+<button class="idioma-btn" onclick="mostrar('espanol')">Espanol</button>
+<button class="idioma-btn" onclick="mostrar('frances')">Francés</button>
+<button class="idioma-btn" onclick="mostrar('aleman')">Alemán</button>
+<button class="idioma-btn" onclick="mostrar('italiano')">Italiano</button>
+
+<div id="resultado" class="paises"></div>
+
+<script>
+/* Diccionario de países por idioma */
+const datos = {
+    espanol:[
+        "España","México","Argentina","Colombia","Chile","Ecuador","Perú",
+        "Bolivia","Paraguay","Uruguay","Venezuela","Guatemala","El Salvador",
+        "Honduras","Nicaragua","Costa Rica","Panamá","República Dominicana"
+    ],
+    frances:[
+        "Francia","Bélgica","Canadá (Quebec)","Suiza","Luxemburgo","Mónaco",
+        "Camerún","Costa de Marfil","Senegal","Mali","Níger",
+        "República del Congo","Madagascar"
+    ],
+    aleman:[
+        "Alemania","Austria","Suiza","Liechtenstein","Luxemburgo",
+        "Bélgica (región germanófona)"
+    ],
+    italiano:[
+        "Italia","Suiza","San Marino","Ciudad del Vaticano",
+        "Eslovenia (zona italófona)","Croacia (Istria)"
+    ],
+    portugues:[
+        "Portugal","Brasil","Angola","Mozambique","Cabo Verde",
+        "Guinea-Bisáu","Santo Tomé y Príncipe","Timor Oriental"
+    ],
+    ingles:[
+        "Estados Unidos","Reino Unido","Canadá","Australia","Nueva Zelanda",
+        "Irlanda","Sudáfrica","India","Filipinas","Singapur","Jamaica"
+    ]
+};
+
+/* Muestra solo nombres, sin imágenes */
+/*esta funcion dice que si el usuario interactua con la variable resultado(paises) apareceran los paises en donde lo hablan*/
+function mostrar(idioma){
+    const cont = document.getElementById('resultado');
+    cont.innerHTML = '';
+    datos[idioma].forEach(p =>{
+        cont.innerHTML += `<p class="pais">${p}</p>`;
+    });
+}
+</script>
+<!-- creacion del boton para volver a la pagina principal  -->
+<button class="volver-btn" onclick="location.href='index.html'">⟵ Volver al inicio</button>
+
+
+</body>
+</html>
